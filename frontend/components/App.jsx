@@ -1,11 +1,11 @@
 import React from "react";
 // import { AuthRoute, ProtectedRoute } from "../util/route_util";
 import { Route } from "react-router-dom";
-import UserInfoContainer from "./user/user_info_container";
+import SplashContainer from "./splash/splash_container";
 
 const App = () => (
   <div>
-    <Route exact path="/" component={UserInfoContainer} />
+    <Route exact path="/" component={SplashContainer} />
   </div>
 );
 
