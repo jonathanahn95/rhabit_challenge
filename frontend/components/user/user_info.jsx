@@ -9,7 +9,7 @@ class UserInfo extends React.Component {
   }
 
   render() {
-    return <nav>YESSSS</nav>;
+    return <nav>123123</nav>;
   }
 }
 

@@ -197,7 +197,7 @@ function (_React$Component) {
   _createClass(UserInfo, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, "YESSSS");
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, "123123");
     }
   }]);
 
