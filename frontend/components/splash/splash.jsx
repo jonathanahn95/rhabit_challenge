@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import AddFormContainer from "../form/add_form_container";
+import HeaderContainer from "../header/header_container";
 import UserNode from "../user_node/user_node";
 
 class Splash extends React.Component {
@@ -13,23 +14,24 @@ class Splash extends React.Component {
     this.props.fetchAllUsers();
   }
 
-  list(data) {
-    const children = items => {
-      if (items) {
-        return <ul>{this.list(items)}</ul>;
+  renderHierarchy(data) {
+    const renderSubs = directReports => {
+      if (directReports.length > 0) {
+        return <ul>{this.renderHierarchy(directReports)}</ul>;
       }
     };
 
-    return data.map((node, index) => {
+    return data.map((userNode, index) => {
       return (
         <UserNode
-          id={node.id}
-          key={node.id}
-          fname={node.fname}
-          lname={node.lname}
+          id={userNode.id}
+          key={userNode.id}
+          fname={userNode.fname}
+          lname={userNode.lname}
           deleteUser={this.props.deleteUser}
+          fetchUsers={this.props.fetchUsers}
         >
-          {children(node.direct_reports)}
+          {renderSubs(userNode.direct_reports)}
         </UserNode>
       );
     });
@@ -38,11 +40,12 @@ class Splash extends React.Component {
   render() {
     return (
       <main>
-        <h1>Rhabit</h1>
-        {this.list(this.props.users)}
-        <Link to="/users/new">
-          <button>Add</button>
-        </Link>
+        <HeaderContainer />
+        <div className="welcome-div">
+          <div>Welcome to the organizational relationship</div>
+          <div>Click on a user if would like to view their direct reports</div>
+        </div>
+        {this.renderHierarchy(this.props.users)}
       </main>
     );
   }

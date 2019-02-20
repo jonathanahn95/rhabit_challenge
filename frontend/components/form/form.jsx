@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
+import HeaderContainer from "../header/header_container";
 
 class Form extends React.Component {
   constructor(props) {
@@ -15,8 +16,6 @@ class Form extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    delete this.state["manager"];
-    debugger;
     this.props.action(this.state).then(this.props.history.push("/"));
   }
 
@@ -29,10 +28,16 @@ class Form extends React.Component {
   }
 
   render() {
+    debugger;
+    let managerId;
+    if (this.state.manager) {
+      managerId = this.state.manager.id;
+    }
     return (
       <div className="form-div">
+        <HeaderContainer />
         <form className="form" onSubmit={this.handleSubmit}>
-          <h1>{this.props.formType}</h1>
+          <h1 className="h1"> {this.props.formType}</h1>
           <div className="form-input-wrapper">
             <div className="form-title">First Name:</div>
             <input
@@ -64,7 +69,7 @@ class Form extends React.Component {
             />
           </div>
           <div className="form-input-wrapper">
-            <div className="form-title">Manager:</div>
+            <div className="form-title">Employee ID:</div>
             <input
               onChange={this.update("manager_id")}
               className="form-input"

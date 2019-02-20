@@ -1,0 +1,68 @@
+.node-div {
+  background: none;
+  color: black;
+  border: 1px solid black;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 14px;
+  padding: 5px 9px 7px 9px;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.node-div:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+.link {
+  text-decoration: none;
+  color: white;
+  list-style: none;
+  font-size: 17px;
+}
+
+.node-wrapper {
+  list-style: none;
+  margin-left: 20px;
+}
+
+.edit-delete {
+  display: flex;
+  margin-top: 10px;
+}
+
+.edit {
+  font-size: 11px;
+  padding: 8px 12px;
+  text-align: center;
+  background-color: rgb(78, 173, 100);
+  cursor: pointer;
+  color: white;
+}
+
+.delete {
+  font-size: 11px;
+  padding: 8px 12px;
+  text-align: center;
+  background-color: rgb(78, 173, 100);
+  cursor: pointer;
+  color: white;
+}
+
+.node-div-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.welcome-div {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  font-size: 22px;
+}

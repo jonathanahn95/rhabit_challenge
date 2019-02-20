@@ -1,25 +1,29 @@
 .form-input-wrapper {
   display: flex;
   padding-bottom: 15px;
+  align-items: center;
 }
 
 .form {
   font-family: Helvetica;
   width: 400px;
   margin: auto;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
-  padding: 10px 40px 40px 40px;
+  padding: 20px 40px 30px 40px;
   border: 1px solid lightgray;
 }
 
 .form-title {
   width: 25%;
+  font-size: 14px;
 }
 
 .form-input {
   width: 75%;
   padding: 3px;
+  font-size: 14px;
 }
 
 .form-submit {
@@ -30,4 +34,10 @@
   font-size: 15px;
   font-weight: 700;
   border-radius: 5px;
+  margin-top: 15px;
+}
+
+.h1 {
+  font-size: 20px;
+  margin: 10px 0 20px 0;
 }

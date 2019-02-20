@@ -30,6 +30,14 @@ export const fetchAllUsers = () => {
   };
 };
 
+export const fetchUsers = user => {
+  return dispatch => {
+    return UserApiUtil.fetchUsers(user).then(users => {
+      return dispatch(receiveAllUsers(users));
+    });
+  };
+};
+
 export const addUser = user => {
   return dispatch => {
     return UserApiUtil.addUser(user).then(users => {

@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import Splash from "./splash";
-import { fetchAllUsers, deleteUser } from "../../actions/user_actions";
+import {
+  fetchAllUsers,
+  deleteUser,
+  fetchUsers
+} from "../../actions/user_actions";
 
 const mapStateToProps = ({ entities: { users } }) => {
   return {
@@ -12,7 +16,8 @@ const mapStateToProps = ({ entities: { users } }) => {
 const mapDispatchToPros = dispatch => {
   return {
     fetchAllUsers: () => dispatch(fetchAllUsers()),
-    deleteUser: user => dispatch(deleteUser(user))
+    deleteUser: user => dispatch(deleteUser(user)),
+    fetchUsers: user => dispatch(fetchUsers(user))
   };
 };
 

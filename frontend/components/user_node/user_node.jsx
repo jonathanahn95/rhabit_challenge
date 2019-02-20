@@ -6,17 +6,30 @@ import { Link } from "react-router-dom";
 class UserNode extends React.Component {
   render() {
     return (
-      <li>
-        <li>
-          {this.props.fname + " " + this.props.lname}
-          <Link to={`users/edit/${this.props.id}`}>
-            <button>Edit</button>
-          </Link>
-          <button onClick={() => this.props.deleteUser(this.props.id)}>
-            Remove
-          </button>
-          {this.props.children}
-        </li>
+      <li className="node-wrapper">
+        <div className="node-div-wrapper">
+          <div
+            className="node-div"
+            onClick={() => this.props.fetchUsers(this.props.id)}
+          >
+            {this.props.fname +
+              " " +
+              this.props.lname +
+              ` / Employee ID: ${this.props.id}`}
+          </div>
+          <div className="edit-delete">
+            <Link to={`users/edit/${this.props.id}`}>
+              <button className="edit">Edit</button>
+            </Link>
+            <button
+              className="delete"
+              onClick={() => this.props.deleteUser(this.props.id)}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+        {this.props.children}
       </li>
     );
   }

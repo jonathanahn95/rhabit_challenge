@@ -18,7 +18,14 @@ class User < ApplicationRecord
     user
   end
 
-  def self.get_hierarchy
+  def self.get_user_hierarchy(user)
+     user = User.where(id: user.id).first
+     output = []
+     output << self.build_hierarchy(user)
+     output.to_json
+  end
+
+  def self.get_hierarchy(user = nil)
      ceo = User.where(manager_id: nil).first
      if ceo.nil?
        return [].to_json

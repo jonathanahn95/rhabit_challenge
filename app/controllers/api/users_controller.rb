@@ -1,5 +1,4 @@
 class Api::UsersController < ApplicationController
-
   def index
     @users = User.get_hierarchy
     render json: @users
@@ -16,7 +15,9 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    user = User.find(params[:id])
+    @users = User.get_user_hierarchy(user)
+    render json: @users
   end
 
   def destroy
