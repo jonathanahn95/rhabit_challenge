@@ -1,17 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import Splash from "./splash";
-import { fetchAllUsers } from "../../actions/user_actions";
+import { fetchAllUsers, deleteUser } from "../../actions/user_actions";
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ entities: { users } }) => {
   return {
-    debugger
+    users: Object.values(users)
   };
 };
 
 const mapDispatchToPros = dispatch => {
   return {
-    fetchAllUsers: () => dispatch(fetchAllUsers())
+    fetchAllUsers: () => dispatch(fetchAllUsers()),
+    deleteUser: user => dispatch(deleteUser(user))
   };
 };
 

@@ -2,7 +2,12 @@ class User < ApplicationRecord
   validates :fname, :lname, :title, presence: true
 
   has_many :subordinates, class_name: 'User', foreign_key: :manager_id
-  belongs_to :superior, class_name: 'User', foreign_key: :manager_id
+
+  belongs_to :superior,
+  foreign_key: :manager_id,
+  class_name: :User,
+  optional: true
+
 
   def self.find_by_credentials(fname)
     user = User.find_by(fname: fname)
@@ -26,4 +31,15 @@ class User < ApplicationRecord
     full_name = employee.fname + " " + employee.lname
     {id: employee.id, name: full_name, title: employee.title, direct_reports: subordinates}
   end
+
+  def self.destroy_subordinates(employee)
+    subordinates = []
+    unless employee.subordinates.blank?
+      employee.subordinates.each do |emp|
+        subordinates << self.destroy_subordinates(emp)
+      end
+    end
+    employee.destroy
+   end
+
 end

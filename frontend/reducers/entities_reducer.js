@@ -1,9 +1,8 @@
-import { merge } from "lodash";
+import { combineReducers } from "redux";
+import users from "./users_reducer";
 
-export default (state = {}, action) => {
-  Object.freeze(state);
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
+const entitiesReducer = combineReducers({
+  users
+});
+
+export default entitiesReducer;
