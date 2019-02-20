@@ -4,7 +4,20 @@ import Form from "./form";
 import { addUser } from "../../actions/user_actions";
 
 const msp = (state, ownProps) => {
-  return {};
+  const greeting = "Add user";
+  const user = {
+    title: "",
+    fname: "",
+    lname: "",
+    manager_id: ""
+  };
+  const formType = "Add User";
+
+  return {
+    greeting,
+    user,
+    formType
+  };
 };
 
 const mdp = dispatch => {

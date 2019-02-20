@@ -90,7 +90,7 @@
 /*!******************************************!*\
   !*** ./frontend/actions/user_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_ALL_USERS, RECEIVE_USER, REMOVE_USER, receiveAllUsers, fetchAllUsers, receiveUser, addUser, removeUser, deleteUser */
+/*! exports provided: RECEIVE_ALL_USERS, RECEIVE_USER, REMOVE_USER, receiveAllUsers, receiveUser, removeUser, fetchAllUsers, fetchUser, addUser, deleteUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99,10 +99,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_USER", function() { return RECEIVE_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_USER", function() { return REMOVE_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAllUsers", function() { return receiveAllUsers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllUsers", function() { return fetchAllUsers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUser", function() { return receiveUser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addUser", function() { return addUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeUser", function() { return removeUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllUsers", function() { return fetchAllUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUser", function() { return fetchUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addUser", function() { return addUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteUser", function() { return deleteUser; });
 /* harmony import */ var _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/user_api_util */ "./frontend/util/user_api_util.js");
 
@@ -115,24 +116,10 @@ var receiveAllUsers = function receiveAllUsers(users) {
     users: users
   };
 };
-var fetchAllUsers = function fetchAllUsers() {
-  return function (dispatch) {
-    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchAllUsers"]().then(function (users) {
-      return dispatch(receiveAllUsers(users));
-    });
-  };
-};
-var receiveUser = function receiveUser(user) {
+var receiveUser = function receiveUser(users) {
   return {
     type: RECEIVE_USER,
-    user: user
-  };
-};
-var addUser = function addUser(user) {
-  return function (dispatch) {
-    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["addUser"](user).then(function (user) {
-      return dispatch(receiveUser(user));
-    });
+    users: users
   };
 };
 var removeUser = function removeUser(users) {
@@ -141,10 +128,30 @@ var removeUser = function removeUser(users) {
     users: users
   };
 };
+var fetchAllUsers = function fetchAllUsers() {
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchAllUsers"]().then(function (users) {
+      return dispatch(receiveAllUsers(users));
+    });
+  };
+};
+var fetchUser = function fetchUser(id) {
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchUser"](id).then(function (user) {
+      return dispatch(receiveUser(user));
+    });
+  };
+};
+var addUser = function addUser(user) {
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["addUser"](user).then(function (users) {
+      return dispatch(receiveUser(users));
+    });
+  };
+};
 var deleteUser = function deleteUser(userId) {
   return function (dispatch) {
     return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteUser"](userId).then(function (users) {
-      debugger;
       return dispatch(removeUser(users));
     });
   };
@@ -165,7 +172,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var _splash_splash_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./splash/splash_container */ "./frontend/components/splash/splash_container.js");
+/* harmony import */ var _form_add_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form/add_form_container */ "./frontend/components/form/add_form_container.js");
+/* harmony import */ var _form_edit_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form/edit_form_container */ "./frontend/components/form/edit_form_container.js");
  // import { AuthRoute, ProtectedRoute } from "../util/route_util";
+
+
 
 
 
@@ -175,6 +186,14 @@ var App = function App() {
     exact: true,
     path: "/",
     component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "/users/new",
+    component: _form_add_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "/users/edit/:id",
+    component: _form_edit_form_container__WEBPACK_IMPORTED_MODULE_4__["default"]
   }));
 };
 
@@ -202,13 +221,74 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  return {};
+  var greeting = "Add user";
+  var user = {
+    title: "",
+    fname: "",
+    lname: "",
+    manager_id: ""
+  };
+  var formType = "Add User";
+  return {
+    greeting: greeting,
+    user: user,
+    formType: formType
+  };
 };
 
 var mdp = function mdp(dispatch) {
   return {
     action: function action(user) {
       return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["addUser"])(user));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(msp, mdp)(_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/form/edit_form_container.js":
+/*!*********************************************************!*\
+  !*** ./frontend/components/form/edit_form_container.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form */ "./frontend/components/form/form.jsx");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _reducers_selector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../reducers/selector */ "./frontend/reducers/selector.js");
+
+
+
+
+
+
+var msp = function msp(state, ownProps) {
+  var greeting = "Add user";
+  var userId = parseInt(ownProps.match.params.id);
+  var formType = "Edit User";
+  var user = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["findUser"])(state.entities.users, userId);
+  return {
+    greeting: greeting,
+    userId: userId,
+    user: user,
+    formType: formType
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    action: function action(user) {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["addUser"])(user));
+    },
+    fetchUser: function fetchUser(userId) {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUser"])(userId));
     }
   };
 };
@@ -264,12 +344,7 @@ function (_React$Component) {
     _classCallCheck(this, Form);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Form).call(this, props));
-    _this.state = {
-      title: "",
-      fname: "",
-      lname: "",
-      manager_id: ""
-    };
+    _this.state = _this.props.user;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -278,8 +353,7 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      debugger;
-      this.props.action(this.state);
+      this.props.action(this.state).then(this.props.history.push("/"));
     }
   }, {
     key: "update",
@@ -298,25 +372,35 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.update("fname"),
         className: "session-form-email-input",
-        type: "text"
+        type: "text",
+        value: this.state.fname
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "session-form-password"
       }, "First Name:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.update("lname"),
         className: "session-form-email-input",
-        type: "text"
+        type: "text",
+        value: this.state.lname
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "session-form-password"
       }, "Last Name:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.update("title"),
         className: "session-form-email-input",
-        type: "text"
+        type: "text",
+        value: this.state.title
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "session-form-password"
       }, "Title:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.update("manager_id"),
+        className: "session-form-email-input",
+        type: "text",
+        value: this.state.manager_id
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "session-form-password"
+      }, "Manager:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "session-form-submit",
         type: "submit",
-        value: "Add"
+        value: this.props.formType
       }));
     }
   }]);
@@ -427,7 +511,8 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_user_node_user_node__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: node.id,
           key: node.id,
-          name: node.name,
+          fname: node.fname,
+          lname: node.lname,
           deleteUser: _this.props.deleteUser
         }, children(node.direct_reports));
       });
@@ -435,7 +520,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Rhabit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_add_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), this.list(this.props.users));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Rhabit"), this.list(this.props.users), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/users/new"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Add")));
     }
   }]);
 
@@ -540,7 +627,9 @@ function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, this.props.name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, this.props.fname + " " + this.props.lname, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "users/edit/".concat(this.props.id)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
           return _this.props.deleteUser(_this.props.id);
         }
@@ -595,6 +684,37 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 
 /***/ }),
 
+/***/ "./frontend/reducers/selector.js":
+/*!***************************************!*\
+  !*** ./frontend/reducers/selector.js ***!
+  \***************************************/
+/*! exports provided: findUser */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findUser", function() { return findUser; });
+var findUser = function findUser(users, userId) {
+  if (users.length === 0) return [];
+
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].id === userId) {
+      console.log(i);
+      return users[i];
+    }
+
+    var result = findUser(users[i].direct_reports, userId);
+
+    if (result.id) {
+      return result;
+    }
+  }
+
+  return [];
+};
+
+/***/ }),
+
 /***/ "./frontend/reducers/users_reducer.js":
 /*!********************************************!*\
   !*** ./frontend/reducers/users_reducer.js ***!
@@ -619,9 +739,9 @@ __webpack_require__.r(__webpack_exports__);
       return action.users;
 
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_USER"]:
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, action.users);
+      return action.users;
 
-    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_USER"]:
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_USER"]:
       return action.users;
 
     default:
@@ -710,7 +830,7 @@ var configureStore = function configureStore() {
 /*!****************************************!*\
   !*** ./frontend/util/user_api_util.js ***!
   \****************************************/
-/*! exports provided: fetchAllUsers, addUser, deleteUser */
+/*! exports provided: fetchAllUsers, addUser, deleteUser, fetchUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -718,6 +838,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllUsers", function() { return fetchAllUsers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addUser", function() { return addUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteUser", function() { return deleteUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUser", function() { return fetchUser; });
 var fetchAllUsers = function fetchAllUsers() {
   return $.ajax({
     method: "GET",
@@ -736,6 +857,12 @@ var addUser = function addUser(user) {
 var deleteUser = function deleteUser(userId) {
   return $.ajax({
     method: "DELETE",
+    url: "api/users/".concat(userId)
+  });
+};
+var fetchUser = function fetchUser(userId) {
+  return $.ajax({
+    method: "GET",
     url: "api/users/".concat(userId)
   });
 };

@@ -5,19 +5,13 @@ import { Link } from "react-router-dom";
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: "",
-      fname: "",
-      lname: "",
-      manager_id: ""
-    };
+    this.state = this.props.user;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    debugger;
-    this.props.action(this.state);
+    this.props.action(this.state).then(this.props.history.push("/"));
   }
 
   update(field) {
@@ -35,21 +29,35 @@ class Form extends React.Component {
           onChange={this.update("fname")}
           className="session-form-email-input"
           type="text"
+          value={this.state.fname}
         />
         <div className="session-form-password">First Name:</div>
         <input
           onChange={this.update("lname")}
           className="session-form-email-input"
           type="text"
+          value={this.state.lname}
         />
         <div className="session-form-password">Last Name:</div>
         <input
           onChange={this.update("title")}
           className="session-form-email-input"
           type="text"
+          value={this.state.title}
         />
         <div className="session-form-password">Title:</div>
-        <input className="session-form-submit" type="submit" value="Add" />
+        <input
+          onChange={this.update("manager_id")}
+          className="session-form-email-input"
+          type="text"
+          value={this.state.manager_id}
+        />
+        <div className="session-form-password">Manager:</div>
+        <input
+          className="session-form-submit"
+          type="submit"
+          value={this.props.formType}
+        />
       </form>
     );
   }

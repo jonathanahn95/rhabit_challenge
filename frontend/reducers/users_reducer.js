@@ -11,8 +11,8 @@ export default (state = {}, action) => {
     case RECEIVE_ALL_USERS:
       return action.users;
     case RECEIVE_USER:
-      return merge({}, action.users);
-    case RECEIVE_USER:
+      return action.users;
+    case REMOVE_USER:
       return action.users;
     default:
       return state;

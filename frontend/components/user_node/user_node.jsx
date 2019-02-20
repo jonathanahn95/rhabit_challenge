@@ -8,8 +8,10 @@ class UserNode extends React.Component {
     return (
       <li>
         <li>
-          {this.props.name}
-          <button>Edit</button>
+          {this.props.fname + " " + this.props.lname}
+          <Link to={`users/edit/${this.props.id}`}>
+            <button>Edit</button>
+          </Link>
           <button onClick={() => this.props.deleteUser(this.props.id)}>
             Remove
           </button>

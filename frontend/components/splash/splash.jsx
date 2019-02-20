@@ -25,7 +25,8 @@ class Splash extends React.Component {
         <UserNode
           id={node.id}
           key={node.id}
-          name={node.name}
+          fname={node.fname}
+          lname={node.lname}
           deleteUser={this.props.deleteUser}
         >
           {children(node.direct_reports)}
@@ -38,8 +39,10 @@ class Splash extends React.Component {
     return (
       <main>
         <h1>Rhabit</h1>
-        <AddFormContainer />
         {this.list(this.props.users)}
+        <Link to="/users/new">
+          <button>Add</button>
+        </Link>
       </main>
     );
   }

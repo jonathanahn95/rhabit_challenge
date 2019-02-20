@@ -10,26 +10,10 @@ export const receiveAllUsers = users => {
   };
 };
 
-export const fetchAllUsers = () => {
-  return dispatch => {
-    return UserApiUtil.fetchAllUsers().then(users => {
-      return dispatch(receiveAllUsers(users));
-    });
-  };
-};
-
-export const receiveUser = user => {
+export const receiveUser = users => {
   return {
     type: RECEIVE_USER,
-    user
-  };
-};
-
-export const addUser = user => {
-  return dispatch => {
-    return UserApiUtil.addUser(user).then(user => {
-      return dispatch(receiveUser(user));
-    });
+    users
   };
 };
 
@@ -38,10 +22,33 @@ export const removeUser = users => ({
   users
 });
 
+export const fetchAllUsers = () => {
+  return dispatch => {
+    return UserApiUtil.fetchAllUsers().then(users => {
+      return dispatch(receiveAllUsers(users));
+    });
+  };
+};
+
+export const fetchUser = id => {
+  return dispatch => {
+    return UserApiUtil.fetchUser(id).then(user => {
+      return dispatch(receiveUser(user));
+    });
+  };
+};
+
+export const addUser = user => {
+  return dispatch => {
+    return UserApiUtil.addUser(user).then(users => {
+      return dispatch(receiveUser(users));
+    });
+  };
+};
+
 export const deleteUser = userId => {
   return dispatch => {
     return UserApiUtil.deleteUser(userId).then(users => {
-      debugger;
       return dispatch(removeUser(users));
     });
   };

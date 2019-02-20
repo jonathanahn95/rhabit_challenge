@@ -8,18 +8,25 @@ class User < ApplicationRecord
   class_name: :User,
   optional: true
 
-
   def self.find_by_credentials(fname)
     user = User.find_by(fname: fname)
     user
   end
 
+  def self.add_user(user)
+    user.subordinates.push(user)
+    user
+  end
+
   def self.get_hierarchy
      ceo = User.where(manager_id: nil).first
+     if ceo.nil?
+       return [].to_json
+     end
      output = []
      output << self.build_hierarchy(ceo)
      output.to_json
-   end
+  end
 
   def self.build_hierarchy(employee)
     subordinates = []
@@ -28,18 +35,16 @@ class User < ApplicationRecord
         subordinates << self.build_hierarchy(emp)
       end
     end
-    full_name = employee.fname + " " + employee.lname
-    {id: employee.id, name: full_name, title: employee.title, direct_reports: subordinates}
+    {id: employee.id, fname: employee.fname, lname: employee.lname, title: employee.title, direct_reports: subordinates, manager: employee.superior}
   end
 
   def self.destroy_subordinates(employee)
-    subordinates = []
     unless employee.subordinates.blank?
       employee.subordinates.each do |emp|
-        subordinates << self.destroy_subordinates(emp)
+        self.destroy_subordinates(emp)
       end
     end
     employee.destroy
-   end
+  end
 
 end
