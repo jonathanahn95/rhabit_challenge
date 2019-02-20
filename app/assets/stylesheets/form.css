@@ -1,0 +1,33 @@
+.form-input-wrapper {
+  display: flex;
+  padding-bottom: 15px;
+}
+
+.form {
+  font-family: Helvetica;
+  width: 400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 40px 40px 40px;
+  border: 1px solid lightgray;
+}
+
+.form-title {
+  width: 25%;
+}
+
+.form-input {
+  width: 75%;
+  padding: 3px;
+}
+
+.form-submit {
+  width: 100%;
+  color: white;
+  background-color: rgb(78, 173, 100);
+  height: 45px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 5px;
+}

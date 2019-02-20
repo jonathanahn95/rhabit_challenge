@@ -35,7 +35,8 @@ class User < ApplicationRecord
         subordinates << self.build_hierarchy(emp)
       end
     end
-    {id: employee.id, fname: employee.fname, lname: employee.lname, title: employee.title, direct_reports: subordinates, manager: employee.superior}
+    {id: employee.id, fname: employee.fname, lname: employee.lname,
+    title: employee.title, direct_reports: subordinates, manager: employee.superior}
   end
 
   def self.destroy_subordinates(employee)

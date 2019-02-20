@@ -1,16 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import Form from "./form";
-import { addUser, fetchUser } from "../../actions/user_actions";
+import { updateUser, fetchAllUsers } from "../../actions/user_actions";
 import { findUser } from "../../reducers/selector";
+
 const msp = (state, ownProps) => {
-  const greeting = "Add user";
   const userId = parseInt(ownProps.match.params.id);
   const formType = "Edit User";
+  let user = findUser(state.entities.users, userId);
 
-  const user = findUser(state.entities.users, userId);
+  if (user.toString() === [].toString()) {
+    user = {};
+  }
+
   return {
-    greeting,
     userId,
     user,
     formType
@@ -19,8 +22,8 @@ const msp = (state, ownProps) => {
 
 const mdp = dispatch => {
   return {
-    action: user => dispatch(addUser(user)),
-    fetchUser: userId => dispatch(fetchUser(userId))
+    action: user => dispatch(updateUser(user)),
+    fetchAllUsers: userId => dispatch(fetchAllUsers(userId))
   };
 };
 

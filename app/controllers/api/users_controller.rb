@@ -26,9 +26,19 @@ class Api::UsersController < ApplicationController
      render json: @users
   end
 
+  def update
+    user = User.find(params[:id])
+    if user.update(user_params)
+      @users = User.get_hierarchy
+      render json: @users
+    else
+      render json: user.errors.full_messages, status: 522
+    end
+  end
+
 
   private
   def user_params
-    params.require(:user).permit(:fname, :lname, :title, :manager_id)
+    params.require(:user).permit(:fname, :lname, :title, :manager_id, :id)
   end
 end

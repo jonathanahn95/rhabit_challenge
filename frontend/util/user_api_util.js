@@ -6,6 +6,7 @@ export const fetchAllUsers = () => {
 };
 
 export const addUser = user => {
+  debugger;
   return $.ajax({
     method: "POST",
     url: `api/users/`,
@@ -20,9 +21,10 @@ export const deleteUser = userId => {
   });
 };
 
-export const fetchUser = userId => {
+export const updateUser = user => {
   return $.ajax({
-    method: "GET",
-    url: `api/users/${userId}`
+    method: "PATCH",
+    url: `api/users/${user.id}`,
+    data: { user }
   });
 };

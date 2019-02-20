@@ -30,17 +30,17 @@ export const fetchAllUsers = () => {
   };
 };
 
-export const fetchUser = id => {
+export const addUser = user => {
   return dispatch => {
-    return UserApiUtil.fetchUser(id).then(user => {
-      return dispatch(receiveUser(user));
+    return UserApiUtil.addUser(user).then(users => {
+      return dispatch(receiveUser(users));
     });
   };
 };
 
-export const addUser = user => {
+export const updateUser = user => {
   return dispatch => {
-    return UserApiUtil.addUser(user).then(users => {
+    return UserApiUtil.updateUser(user).then(users => {
       return dispatch(receiveUser(users));
     });
   };

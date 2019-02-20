@@ -90,7 +90,7 @@
 /*!******************************************!*\
   !*** ./frontend/actions/user_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_ALL_USERS, RECEIVE_USER, REMOVE_USER, receiveAllUsers, receiveUser, removeUser, fetchAllUsers, fetchUser, addUser, deleteUser */
+/*! exports provided: RECEIVE_ALL_USERS, RECEIVE_USER, REMOVE_USER, receiveAllUsers, receiveUser, removeUser, fetchAllUsers, addUser, updateUser, deleteUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -102,8 +102,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUser", function() { return receiveUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeUser", function() { return removeUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllUsers", function() { return fetchAllUsers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUser", function() { return fetchUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addUser", function() { return addUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteUser", function() { return deleteUser; });
 /* harmony import */ var _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/user_api_util */ "./frontend/util/user_api_util.js");
 
@@ -135,16 +135,16 @@ var fetchAllUsers = function fetchAllUsers() {
     });
   };
 };
-var fetchUser = function fetchUser(id) {
-  return function (dispatch) {
-    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchUser"](id).then(function (user) {
-      return dispatch(receiveUser(user));
-    });
-  };
-};
 var addUser = function addUser(user) {
   return function (dispatch) {
     return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["addUser"](user).then(function (users) {
+      return dispatch(receiveUser(users));
+    });
+  };
+};
+var updateUser = function updateUser(user) {
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["updateUser"](user).then(function (users) {
       return dispatch(receiveUser(users));
     });
   };
@@ -221,16 +221,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  var greeting = "Add user";
+  var formType = "Add User";
   var user = {
     title: "",
     fname: "",
     lname: "",
     manager_id: ""
   };
-  var formType = "Add User";
   return {
-    greeting: greeting,
     user: user,
     formType: formType
   };
@@ -240,6 +238,9 @@ var mdp = function mdp(dispatch) {
   return {
     action: function action(user) {
       return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["addUser"])(user));
+    },
+    fetchAllUsers: function fetchAllUsers(userId) {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllUsers"])(userId));
     }
   };
 };
@@ -270,12 +271,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  var greeting = "Add user";
   var userId = parseInt(ownProps.match.params.id);
   var formType = "Edit User";
   var user = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["findUser"])(state.entities.users, userId);
+
+  if (user.toString() === [].toString()) {
+    user = {};
+  }
+
   return {
-    greeting: greeting,
     userId: userId,
     user: user,
     formType: formType
@@ -285,10 +289,10 @@ var msp = function msp(state, ownProps) {
 var mdp = function mdp(dispatch) {
   return {
     action: function action(user) {
-      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["addUser"])(user));
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user));
     },
-    fetchUser: function fetchUser(userId) {
-      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUser"])(userId));
+    fetchAllUsers: function fetchAllUsers(userId) {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllUsers"])(userId));
     }
   };
 };
@@ -350,9 +354,16 @@ function (_React$Component) {
   }
 
   _createClass(Form, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchAllUsers();
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
+      delete this.state["manager"];
+      debugger;
       this.props.action(this.state).then(this.props.history.push("/"));
     }
   }, {
@@ -367,41 +378,56 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form",
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        onChange: this.update("fname"),
-        className: "session-form-email-input",
-        type: "text",
-        value: this.state.fname
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "session-form-password"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.formType), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-input-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-title"
       }, "First Name:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        onChange: this.update("lname"),
-        className: "session-form-email-input",
+        onChange: this.update("fname"),
+        className: "form-input",
         type: "text",
-        value: this.state.lname
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "session-form-password"
+        value: this.state.fname,
+        required: true
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-input-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-title"
       }, "Last Name:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        onChange: this.update("title"),
-        className: "session-form-email-input",
+        onChange: this.update("lname"),
+        className: "form-input",
         type: "text",
-        value: this.state.title
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "session-form-password"
+        value: this.state.lname,
+        required: true
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-input-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-title"
       }, "Title:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        onChange: this.update("manager_id"),
-        className: "session-form-email-input",
+        onChange: this.update("title"),
+        className: "form-input",
         type: "text",
-        value: this.state.manager_id
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "session-form-password"
+        value: this.state.title,
+        required: true
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-input-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-title"
       }, "Manager:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "session-form-submit",
+        onChange: this.update("manager_id"),
+        className: "form-input",
+        type: "text",
+        value: this.state.manager_id,
+        required: true
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-submit",
         type: "submit",
         value: this.props.formType
-      }));
+      })));
     }
   }]);
 
@@ -699,7 +725,6 @@ var findUser = function findUser(users, userId) {
 
   for (var i = 0; i < users.length; i++) {
     if (users[i].id === userId) {
-      console.log(i);
       return users[i];
     }
 
@@ -830,7 +855,7 @@ var configureStore = function configureStore() {
 /*!****************************************!*\
   !*** ./frontend/util/user_api_util.js ***!
   \****************************************/
-/*! exports provided: fetchAllUsers, addUser, deleteUser, fetchUser */
+/*! exports provided: fetchAllUsers, addUser, deleteUser, updateUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -838,7 +863,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllUsers", function() { return fetchAllUsers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addUser", function() { return addUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteUser", function() { return deleteUser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUser", function() { return fetchUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
 var fetchAllUsers = function fetchAllUsers() {
   return $.ajax({
     method: "GET",
@@ -846,6 +871,7 @@ var fetchAllUsers = function fetchAllUsers() {
   });
 };
 var addUser = function addUser(user) {
+  debugger;
   return $.ajax({
     method: "POST",
     url: "api/users/",
@@ -860,10 +886,13 @@ var deleteUser = function deleteUser(userId) {
     url: "api/users/".concat(userId)
   });
 };
-var fetchUser = function fetchUser(userId) {
+var updateUser = function updateUser(user) {
   return $.ajax({
-    method: "GET",
-    url: "api/users/".concat(userId)
+    method: "PATCH",
+    url: "api/users/".concat(user.id),
+    data: {
+      user: user
+    }
   });
 };
 
