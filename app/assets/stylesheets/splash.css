@@ -6,7 +6,7 @@
   box-sizing: border-box;
   font-size: 14px;
   padding: 5px 9px 7px 9px;
-  width: 300px;
+  width: 500px;
   display: flex;
   justify-content: center;
   margin-top: 10px;
@@ -21,7 +21,7 @@
   text-decoration: none;
   color: white;
   list-style: none;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .node-wrapper {
@@ -65,4 +65,14 @@
   align-items: center;
   margin-bottom: 40px;
   font-size: 22px;
+  font-family: Helvetica;
+}
+
+.ceo-edit {
+  font-size: 13px;
+  padding: 8px 13px;
+  text-align: center;
+  background-color: rgb(78, 173, 100);
+  color: white;
+  margin-top: 10px;
 }

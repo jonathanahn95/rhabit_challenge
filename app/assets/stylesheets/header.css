@@ -9,6 +9,7 @@
   font-weight: 700;
   align-items: center;
   margin-bottom: 40px;
+  font-family: Helvetica;
 }
 
 .header-li-wrapper {
@@ -20,15 +21,15 @@
 .rhabit {
   color: white;
   font-family: "Merriweather", serif;
-  font-size: 36px;
+  font-size: 32px;
   list-style: none;
 }
 
 .view-all {
   cursor: pointer;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .home {
-  font-size: 17px;
+  font-size: 15px;
 }

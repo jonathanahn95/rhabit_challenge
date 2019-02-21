@@ -699,6 +699,7 @@ function (_React$Component) {
           key: userNode.id,
           fname: userNode.fname,
           lname: userNode.lname,
+          title: userNode.title,
           deleteUser: _this.props.deleteUser,
           fetchUsers: _this.props.fetchUsers
         }, renderSubs(userNode.direct_reports));
@@ -817,16 +818,7 @@ function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "node-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "node-div-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "node-div",
-        onClick: function onClick() {
-          return _this.props.fetchUsers(_this.props.id);
-        }
-      }, this.props.fname + " " + this.props.lname + " / Employee ID: ".concat(this.props.id)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      var updateOptions = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-delete"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "users/edit/".concat(this.props.id)
@@ -837,7 +829,24 @@ function (_React$Component) {
         onClick: function onClick() {
           return _this.props.deleteUser(_this.props.id);
         }
-      }, "Remove"))), this.props.children);
+      }, "Remove"));
+
+      if (this.props.title === "CEO") {
+        updateOptions = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "ceo-edit"
+        }, "Cant edit CEO");
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "node-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "node-div-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "node-div",
+        onClick: function onClick() {
+          return _this.props.fetchUsers(_this.props.id);
+        }
+      }, this.props.fname + " " + this.props.lname + " " + this.props.title + " / Employee ID: ".concat(this.props.id)), updateOptions), this.props.children);
     }
   }]);
 

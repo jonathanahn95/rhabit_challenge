@@ -28,6 +28,7 @@ class Splash extends React.Component {
           key={userNode.id}
           fname={userNode.fname}
           lname={userNode.lname}
+          title={userNode.title}
           deleteUser={this.props.deleteUser}
           fetchUsers={this.props.fetchUsers}
         >
