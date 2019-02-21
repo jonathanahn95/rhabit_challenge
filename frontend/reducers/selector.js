@@ -11,3 +11,13 @@ export const findUser = (users, userId) => {
   }
   return [];
 };
+
+export const getAllUsers = users => {
+  let userNames = [];
+  for (let i = 0; i < users.length; i++) {
+    userNames.push(users[i]);
+    const result = getAllUsers(users[i].direct_reports);
+    userNames = userNames.concat(result);
+  }
+  return userNames;
+};

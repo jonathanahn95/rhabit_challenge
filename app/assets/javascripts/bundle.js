@@ -223,6 +223,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form */ "./frontend/components/form/form.jsx");
 /* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _reducers_selector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../reducers/selector */ "./frontend/reducers/selector.js");
+
 
 
 
@@ -236,7 +238,9 @@ var msp = function msp(state, ownProps) {
     lname: "",
     manager_id: ""
   };
+  var users = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getAllUsers"])(Object.values(state.entities.users));
   return {
+    users: users,
     user: user,
     formType: formType
   };
@@ -247,8 +251,8 @@ var mdp = function mdp(dispatch) {
     action: function action(user) {
       return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["addUser"])(user));
     },
-    fetchAllUsers: function fetchAllUsers(userId) {
-      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllUsers"])(userId));
+    fetchAllUsers: function fetchAllUsers() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllUsers"])());
     }
   };
 };
@@ -294,7 +298,9 @@ var msp = function msp(state, ownProps) {
     user = {};
   }
 
+  var users = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getAllUsers"])(Object.values(state.entities.users));
   return {
+    users: users,
     userId: userId,
     user: user,
     formType: formType
@@ -306,8 +312,8 @@ var mdp = function mdp(dispatch) {
     action: function action(user) {
       return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user));
     },
-    fetchAllUsers: function fetchAllUsers(userId) {
-      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllUsers"])(userId));
+    fetchAllUsers: function fetchAllUsers() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllUsers"])());
     }
   };
 };
@@ -367,6 +373,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Form).call(this, props));
     _this.state = _this.props.user;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.createOptions = _this.createOptions.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -402,6 +409,16 @@ function (_React$Component) {
       return function (e) {
         _this2.setState(_defineProperty({}, field, e.currentTarget.value));
       };
+      debugger;
+    }
+  }, {
+    key: "createOptions",
+    value: function createOptions() {
+      return this.props.users.map(function (el, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          value: "".concat(el.id)
+        }, el.fname + " " + el.lname);
+      });
     }
   }, {
     key: "render",
@@ -453,15 +470,11 @@ function (_React$Component) {
         className: "form-input-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Manager:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "employee-id"
-      }, "(Enter Employee ID)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        onChange: this.update("manager_id"),
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Manager:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         className: "form-input",
-        type: "text",
-        value: this.state.manager_id,
-        required: true
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.update("manager_id"),
+        value: this.state.manager_id
+      }, this.createOptions())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "form-submit",
         type: "submit",
         value: this.props.formType
@@ -914,12 +927,13 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 /*!***************************************!*\
   !*** ./frontend/reducers/selector.js ***!
   \***************************************/
-/*! exports provided: findUser */
+/*! exports provided: findUser, getAllUsers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findUser", function() { return findUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllUsers", function() { return getAllUsers; });
 var findUser = function findUser(users, userId) {
   if (users.length === 0) return [];
 
@@ -936,6 +950,17 @@ var findUser = function findUser(users, userId) {
   }
 
   return [];
+};
+var getAllUsers = function getAllUsers(users) {
+  var userNames = [];
+
+  for (var i = 0; i < users.length; i++) {
+    userNames.push(users[i]);
+    var result = getAllUsers(users[i].direct_reports);
+    userNames = userNames.concat(result);
+  }
+
+  return userNames;
 };
 
 /***/ }),

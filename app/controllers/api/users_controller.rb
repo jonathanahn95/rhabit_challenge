@@ -5,13 +5,10 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-     user = User.new(user_params)
-     if user.save!
-       @users = User.get_hierarchy
-       render json: @users
-     else
-       render json: ['Please fill all fields, please try again.'], status: 422
-     end
+    user = User.new(user_params)
+    user.save!
+    @users = User.get_hierarchy
+    render json: @users
   end
 
   def show

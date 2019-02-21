@@ -8,6 +8,7 @@ class Form extends React.Component {
     super(props);
     this.state = this.props.user;
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.createOptions = this.createOptions.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +37,13 @@ class Form extends React.Component {
         [field]: e.currentTarget.value
       });
     };
+    debugger;
+  }
+
+  createOptions() {
+    return this.props.users.map((el, i) => (
+      <option value={`${el.id}`}>{el.fname + " " + el.lname}</option>
+    ));
   }
 
   render() {
@@ -81,15 +89,14 @@ class Form extends React.Component {
           <div className="form-input-wrapper">
             <div className="form-title">
               <p>Manager:</p>
-              <p className="employee-id">(Enter Employee ID)</p>
             </div>
-            <input
-              onChange={this.update("manager_id")}
+            <select
               className="form-input"
-              type="text"
+              onChange={this.update("manager_id")}
               value={this.state.manager_id}
-              required
-            />
+            >
+              {this.createOptions()}
+            </select>
           </div>
           <input
             className="form-submit"
