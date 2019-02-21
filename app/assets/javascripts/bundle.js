@@ -857,7 +857,7 @@ function (_React$Component) {
         onClick: function onClick() {
           return _this3.props.fetchUsers(_this3.props.id);
         }
-      }, this.props.fname + " " + this.props.lname + " " + this.props.title + " / Employee ID: ".concat(this.props.id)), this.renderOptions()), this.props.children);
+      }, this.props.fname + " " + this.props.lname + " /  " + this.props.title + " / Employee ID: ".concat(this.props.id)), this.renderOptions()), this.props.children);
     }
   }]);
 

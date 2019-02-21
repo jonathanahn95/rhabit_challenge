@@ -41,7 +41,7 @@ class UserNode extends React.Component {
             {this.props.fname +
               " " +
               this.props.lname +
-              " " +
+              " /  " +
               this.props.title +
               ` / Employee ID: ${this.props.id}`}
           </div>
