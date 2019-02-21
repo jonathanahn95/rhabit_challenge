@@ -33,11 +33,11 @@ class Form extends React.Component {
 
   update(field) {
     return e => {
+      debugger;
       this.setState({
         [field]: e.currentTarget.value
       });
     };
-    debugger;
   }
 
   createOptions() {
@@ -95,6 +95,7 @@ class Form extends React.Component {
               onChange={this.update("manager_id")}
               value={this.state.manager_id}
             >
+              <option>Select manager</option>
               {this.createOptions()}
             </select>
           </div>

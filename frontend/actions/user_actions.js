@@ -40,6 +40,7 @@ export const fetchUsers = user => {
 
 export const addUser = user => {
   return dispatch => {
+    debugger;
     return UserApiUtil.addUser(user).then(users => {
       return dispatch(receiveUser(users));
     });

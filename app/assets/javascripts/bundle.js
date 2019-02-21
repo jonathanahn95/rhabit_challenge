@@ -145,6 +145,7 @@ var fetchUsers = function fetchUsers(user) {
 };
 var addUser = function addUser(user) {
   return function (dispatch) {
+    debugger;
     return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["addUser"](user).then(function (users) {
       return dispatch(receiveUser(users));
     });
@@ -239,6 +240,7 @@ var msp = function msp(state, ownProps) {
     manager_id: ""
   };
   var users = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getAllUsers"])(Object.values(state.entities.users));
+  debugger;
   return {
     users: users,
     user: user,
@@ -407,9 +409,10 @@ function (_React$Component) {
       var _this2 = this;
 
       return function (e) {
+        debugger;
+
         _this2.setState(_defineProperty({}, field, e.currentTarget.value));
       };
-      debugger;
     }
   }, {
     key: "createOptions",
@@ -474,7 +477,7 @@ function (_React$Component) {
         className: "form-input",
         onChange: this.update("manager_id"),
         value: this.state.manager_id
-      }, this.createOptions())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Select manager"), this.createOptions())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "form-submit",
         type: "submit",
         value: this.props.formType

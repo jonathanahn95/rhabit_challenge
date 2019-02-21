@@ -13,6 +13,7 @@ const msp = (state, ownProps) => {
     manager_id: ""
   };
   const users = getAllUsers(Object.values(state.entities.users));
+  debugger;
   return {
     users: users,
     user,

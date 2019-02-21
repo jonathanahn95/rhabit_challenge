@@ -18,7 +18,6 @@ const msp = (state, ownProps) => {
     user = {};
   }
   const users = getAllUsers(Object.values(state.entities.users));
-
   return {
     users: users,
     userId,
