@@ -10,9 +10,6 @@ class Header extends React.Component {
         <li className="rhabit">rhabit</li>
         <div className="header-li-wrapper">
           <Link className="link" to="/">
-            <li className="home">Home</li>
-          </Link>
-          <Link className="link" to="/">
             <li className="view-all" onClick={() => this.props.fetchAllUsers()}>
               View All
             </li>

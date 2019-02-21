@@ -557,11 +557,6 @@ function (_React$Component) {
         className: "link",
         to: "/"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "home"
-      }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        className: "link",
-        to: "/"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "view-all",
         onClick: function onClick() {
           return _this.props.fetchAllUsers();
