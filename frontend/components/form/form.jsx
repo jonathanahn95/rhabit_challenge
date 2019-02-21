@@ -7,6 +7,7 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props.user;
+    debugger;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -14,6 +15,17 @@ class Form extends React.Component {
     this.props.fetchAllUsers();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.id !== nextProps.user.id) {
+      this.setState({
+        id: nextProps.user.id,
+        fname: nextProps.user.fname,
+        lname: nextProps.user.lname,
+        title: nextProps.user.title,
+        manager_id: nextProps.user.manager_id
+      });
+    }
+  }
   handleSubmit(e) {
     e.preventDefault();
     this.props.action(this.state).then(this.props.history.push("/"));
@@ -28,7 +40,6 @@ class Form extends React.Component {
   }
 
   render() {
-    debugger;
     let managerId;
     if (this.state.manager) {
       managerId = this.state.manager.id;

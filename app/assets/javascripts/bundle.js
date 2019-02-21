@@ -366,6 +366,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Form).call(this, props));
     _this.state = _this.props.user;
+    debugger;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -374,6 +375,19 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchAllUsers();
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.state.id !== nextProps.user.id) {
+        this.setState({
+          id: nextProps.user.id,
+          fname: nextProps.user.fname,
+          lname: nextProps.user.lname,
+          title: nextProps.user.title,
+          manager_id: nextProps.user.manager_id
+        });
+      }
     }
   }, {
     key: "handleSubmit",
@@ -393,7 +407,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       var managerId;
 
       if (this.state.manager) {
