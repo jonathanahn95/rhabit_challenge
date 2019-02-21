@@ -6,21 +6,17 @@ import HeaderContainer from "../header/header_container";
 import UserNode from "../user_node/user_node";
 
 class Splash extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.fetchAllUsers();
   }
 
-  renderHierarchy(data) {
-    const renderSubs = directReports => {
-      if (directReports.length > 0) {
-        return <ul>{this.renderHierarchy(directReports)}</ul>;
-      }
-    };
+  renderSubs(directReports) {
+    if (directReports.length > 0) {
+      return <ul>{this.renderHierarchy(directReports)}</ul>;
+    }
+  }
 
+  renderHierarchy(data) {
     return data.map((userNode, index) => {
       return (
         <UserNode
@@ -32,7 +28,7 @@ class Splash extends React.Component {
           deleteUser={this.props.deleteUser}
           fetchUsers={this.props.fetchUsers}
         >
-          {renderSubs(userNode.direct_reports)}
+          {this.renderSubs(userNode.direct_reports)}
         </UserNode>
       );
     });

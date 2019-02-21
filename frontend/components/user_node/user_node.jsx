@@ -4,7 +4,12 @@ import merge from "lodash/merge";
 import { Link } from "react-router-dom";
 
 class UserNode extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.renderOptions = this.renderOptions.bind(this);
+  }
+
+  renderOptions() {
     let updateOptions = (
       <div className="edit-delete">
         <Link to={`users/edit/${this.props.id}`}>
@@ -22,6 +27,10 @@ class UserNode extends React.Component {
       updateOptions = <div className="ceo-edit">Cant edit CEO</div>;
     }
 
+    return updateOptions;
+  }
+
+  render() {
     return (
       <li className="node-wrapper">
         <div className="node-div-wrapper">
@@ -36,7 +45,7 @@ class UserNode extends React.Component {
               this.props.title +
               ` / Employee ID: ${this.props.id}`}
           </div>
-          {updateOptions}
+          {this.renderOptions()}
         </div>
         {this.props.children}
       </li>

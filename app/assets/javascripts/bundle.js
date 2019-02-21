@@ -366,7 +366,6 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Form).call(this, props));
     _this.state = _this.props.user;
-    debugger;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -671,10 +670,10 @@ var Splash =
 function (_React$Component) {
   _inherits(Splash, _React$Component);
 
-  function Splash(props) {
+  function Splash() {
     _classCallCheck(this, Splash);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Splash).call(this, props));
+    return _possibleConstructorReturn(this, _getPrototypeOf(Splash).apply(this, arguments));
   }
 
   _createClass(Splash, [{
@@ -683,15 +682,16 @@ function (_React$Component) {
       this.props.fetchAllUsers();
     }
   }, {
+    key: "renderSubs",
+    value: function renderSubs(directReports) {
+      if (directReports.length > 0) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.renderHierarchy(directReports));
+      }
+    }
+  }, {
     key: "renderHierarchy",
     value: function renderHierarchy(data) {
       var _this = this;
-
-      var renderSubs = function renderSubs(directReports) {
-        if (directReports.length > 0) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, _this.renderHierarchy(directReports));
-        }
-      };
 
       return data.map(function (userNode, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_user_node_user_node__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -702,7 +702,7 @@ function (_React$Component) {
           title: userNode.title,
           deleteUser: _this.props.deleteUser,
           fetchUsers: _this.props.fetchUsers
-        }, renderSubs(userNode.direct_reports));
+        }, _this.renderSubs(userNode.direct_reports));
       });
     }
   }, {
@@ -789,9 +789,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -807,16 +807,20 @@ var UserNode =
 function (_React$Component) {
   _inherits(UserNode, _React$Component);
 
-  function UserNode() {
+  function UserNode(props) {
+    var _this;
+
     _classCallCheck(this, UserNode);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(UserNode).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UserNode).call(this, props));
+    _this.renderOptions = _this.renderOptions.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(UserNode, [{
-    key: "render",
-    value: function render() {
-      var _this = this;
+    key: "renderOptions",
+    value: function renderOptions() {
+      var _this2 = this;
 
       var updateOptions = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-delete"
@@ -827,7 +831,7 @@ function (_React$Component) {
       }, "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "delete",
         onClick: function onClick() {
-          return _this.props.deleteUser(_this.props.id);
+          return _this2.props.deleteUser(_this2.props.id);
         }
       }, "Remove"));
 
@@ -837,6 +841,13 @@ function (_React$Component) {
         }, "Cant edit CEO");
       }
 
+      return updateOptions;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "node-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -844,9 +855,9 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "node-div",
         onClick: function onClick() {
-          return _this.props.fetchUsers(_this.props.id);
+          return _this3.props.fetchUsers(_this3.props.id);
         }
-      }, this.props.fname + " " + this.props.lname + " " + this.props.title + " / Employee ID: ".concat(this.props.id)), updateOptions), this.props.children);
+      }, this.props.fname + " " + this.props.lname + " " + this.props.title + " / Employee ID: ".concat(this.props.id)), this.renderOptions()), this.props.children);
     }
   }]);
 

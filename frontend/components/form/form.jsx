@@ -7,7 +7,6 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props.user;
-    debugger;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
