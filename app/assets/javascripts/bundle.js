@@ -287,22 +287,24 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(state, ownProps) {
   var userId = parseInt(ownProps.match.params.id);
   var formType = "Edit User";
+  var users = [];
+  var userNames = [];
   var user = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["findUser"])(state.entities.users, userId);
-  debugger;
 
   if (user.manager) {
-    debugger;
     user["manager_id"] = user.manager.id;
     delete user["manager"];
+    var userSubs = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getSubordinates"])(user);
+    users = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getUsers"])(Object.values(state.entities.users), parseInt(ownProps.match.params.id));
+    userNames = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getFilteredUsers"])(users, userSubs);
   }
 
   if (user.toString() === [].toString()) {
     user = {};
   }
 
-  var users = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getAllUsers"])(Object.values(state.entities.users));
   return {
-    users: users,
+    users: userNames,
     userId: userId,
     user: user,
     formType: formType
@@ -930,13 +932,16 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 /*!***************************************!*\
   !*** ./frontend/reducers/selector.js ***!
   \***************************************/
-/*! exports provided: findUser, getAllUsers */
+/*! exports provided: findUser, getAllUsers, getUsers, getSubordinates, getFilteredUsers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findUser", function() { return findUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllUsers", function() { return getAllUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return getUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSubordinates", function() { return getSubordinates; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFilteredUsers", function() { return getFilteredUsers; });
 var findUser = function findUser(users, userId) {
   if (users.length === 0) return [];
 
@@ -961,6 +966,42 @@ var getAllUsers = function getAllUsers(users) {
     userNames.push(users[i]);
     var result = getAllUsers(users[i].direct_reports);
     userNames = userNames.concat(result);
+  }
+
+  return userNames;
+};
+var getUsers = function getUsers(users, userId) {
+  var userNames = [];
+
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].id !== userId) {
+      userNames.push(users[i]);
+    }
+
+    var result = getUsers(users[i].direct_reports, userId);
+    userNames = userNames.concat(result);
+  }
+
+  return userNames;
+};
+var getSubordinates = function getSubordinates(user) {
+  var userNames = [];
+
+  for (var i = 0; i < user.direct_reports.length; i++) {
+    userNames.push(user.direct_reports[i].id);
+    var result = getSubordinates(user.direct_reports[i]);
+    userNames = userNames.concat(result);
+  }
+
+  return userNames;
+};
+var getFilteredUsers = function getFilteredUsers(users, userSubs) {
+  var userNames = [];
+
+  for (var i = 0; i < users.length; i++) {
+    if (!userSubs.includes(users[i].id)) {
+      userNames.push(users[i]);
+    }
   }
 
   return userNames;

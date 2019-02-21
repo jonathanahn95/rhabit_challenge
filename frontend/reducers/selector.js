@@ -21,3 +21,36 @@ export const getAllUsers = users => {
   }
   return userNames;
 };
+
+export const getUsers = (users, userId) => {
+  let userNames = [];
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].id !== userId) {
+      userNames.push(users[i]);
+    }
+    const result = getUsers(users[i].direct_reports, userId);
+    userNames = userNames.concat(result);
+  }
+  return userNames;
+};
+
+export const getSubordinates = user => {
+  let userNames = [];
+  for (let i = 0; i < user.direct_reports.length; i++) {
+    userNames.push(user.direct_reports[i].id);
+    const result = getSubordinates(user.direct_reports[i]);
+    userNames = userNames.concat(result);
+  }
+  return userNames;
+};
+
+export const getFilteredUsers = (users, userSubs) => {
+  let userNames = [];
+  for (let i = 0; i < users.length; i++) {
+    if (!userSubs.includes(users[i].id)) {
+      userNames.push(users[i]);
+    }
+  }
+
+  return userNames;
+};

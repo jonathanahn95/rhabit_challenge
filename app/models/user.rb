@@ -46,13 +46,13 @@ class User < ApplicationRecord
     title: employee.title, direct_reports: subordinates, manager: employee.superior}
   end
 
-  def self.destroy_subordinates(employee)
+  def self.reassign_subs_manager(employee, sup)
     unless employee.subordinates.blank?
       employee.subordinates.each do |emp|
-        self.destroy_subordinates(emp)
+        emp.manager_id = sup.id
+        emp.save
       end
     end
-    employee.destroy
   end
 
 end

@@ -19,7 +19,8 @@ class Api::UsersController < ApplicationController
 
   def destroy
      user = User.find(params[:id])
-     User.destroy_subordinates(user)
+     User.reassign_subs_manager(user, user.superior)
+     user.destroy
      @users = User.get_hierarchy
      render json: @users
   end
