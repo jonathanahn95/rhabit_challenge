@@ -282,10 +282,13 @@ var msp = function msp(state, ownProps) {
   var userId = parseInt(ownProps.match.params.id);
   var formType = "Edit User";
   var user = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["findUser"])(state.entities.users, userId);
-  user["manager_id"] = user.manager.id;
   debugger;
-  delete user["manager"];
-  debugger;
+
+  if (user.manager) {
+    debugger;
+    user["manager_id"] = user.manager.id;
+    delete user["manager"];
+  }
 
   if (user.toString() === [].toString()) {
     user = {};
