@@ -79,7 +79,10 @@ class Form extends React.Component {
             />
           </div>
           <div className="form-input-wrapper">
-            <div className="form-title">Employee ID:</div>
+            <div className="form-title">
+              <p>Manager:</p>
+              <p className="employee-id">(Enter Employee ID)</p>
+            </div>
             <input
               onChange={this.update("manager_id")}
               className="form-input"

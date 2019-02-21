@@ -16,12 +16,12 @@
 }
 
 .form-title {
-  width: 25%;
+  width: 28%;
   font-size: 14px;
 }
 
 .form-input {
-  width: 75%;
+  width: 72%;
   padding: 3px;
   font-size: 14px;
 }
@@ -40,4 +40,9 @@
 .h1 {
   font-size: 20px;
   margin: 10px 0 20px 0;
+}
+
+.employee-id {
+  font-size: 11px;
+  margin-top: 2px;
 }

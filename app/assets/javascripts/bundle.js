@@ -453,7 +453,9 @@ function (_React$Component) {
         className: "form-input-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-title"
-      }, "Employee ID:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Manager:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "employee-id"
+      }, "(Enter Employee ID)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.update("manager_id"),
         className: "form-input",
         type: "text",
