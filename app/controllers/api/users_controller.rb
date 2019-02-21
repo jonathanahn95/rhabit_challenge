@@ -27,12 +27,9 @@ class Api::UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
-    if user.update(user_params)
-      @users = User.get_hierarchy
-      render json: @users
-    else
-      render json: user.errors.full_messages, status: 522
-    end
+    user.update(user_params)
+    @users = User.get_hierarchy
+    render json: @users
   end
 
 
