@@ -12,8 +12,8 @@ const msp = (state, ownProps) => {
     lname: "",
     manager_id: ""
   };
+  /// getAllUsers will return back an array with all the users info
   const users = getAllUsers(Object.values(state.entities.users));
-  debugger;
   return {
     users: users,
     user,

@@ -238,9 +238,9 @@ var msp = function msp(state, ownProps) {
     fname: "",
     lname: "",
     manager_id: ""
-  };
+  }; /// getAllUsers will return back an array with all the users info
+
   var users = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getAllUsers"])(Object.values(state.entities.users));
-  debugger;
   return {
     users: users,
     user: user,
@@ -288,14 +288,20 @@ var msp = function msp(state, ownProps) {
   var userId = parseInt(ownProps.match.params.id);
   var formType = "Edit User";
   var users = [];
-  var userNames = [];
+  var userNames = []; /// user selector to find user in state
+
   var user = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["findUser"])(state.entities.users, userId);
+  debugger; /// once we have a user we have to delete set a new key, manager_id, to the managers id
+  /// we want to delete the manager key because when we send it back to the back end, we only permift a manager_id
 
   if (user.manager) {
     user["manager_id"] = user.manager.id;
-    delete user["manager"];
-    var userSubs = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getSubordinates"])(user);
-    users = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getUsers"])(Object.values(state.entities.users), parseInt(ownProps.match.params.id));
+    delete user["manager"]; /// grab all the users direct_reports in the form of an array
+
+    var userSubs = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getSubordinates"])(user); /// filter out the current user's info in the users slice of state
+
+    users = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getUsers"])(Object.values(state.entities.users), parseInt(ownProps.match.params.id)); /// the function getFilteredUsers will filter out all the subordinates of the current user in the overall users array
+
     userNames = Object(_reducers_selector__WEBPACK_IMPORTED_MODULE_4__["getFilteredUsers"])(users, userSubs);
   }
 
@@ -937,6 +943,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return getUsers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSubordinates", function() { return getSubordinates; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFilteredUsers", function() { return getFilteredUsers; });
+/// function to find user in the users arr
 var findUser = function findUser(users, userId) {
   if (users.length === 0) return [];
 
@@ -953,7 +960,8 @@ var findUser = function findUser(users, userId) {
   }
 
   return [];
-};
+}; /// function to grab all users info
+
 var getAllUsers = function getAllUsers(users) {
   var userNames = [];
 
@@ -964,7 +972,8 @@ var getAllUsers = function getAllUsers(users) {
   }
 
   return userNames;
-};
+}; /// function to filter out the users info in the functions argument inside the users arr
+
 var getUsers = function getUsers(users, userId) {
   var userNames = [];
 
@@ -978,7 +987,8 @@ var getUsers = function getUsers(users, userId) {
   }
 
   return userNames;
-};
+}; /// function to grab the users subordinates info
+
 var getSubordinates = function getSubordinates(user) {
   var userNames = [];
 
@@ -989,7 +999,8 @@ var getSubordinates = function getSubordinates(user) {
   }
 
   return userNames;
-};
+}; /// will filter out the userSubs out of the users array
+
 var getFilteredUsers = function getFilteredUsers(users, userSubs) {
   var userNames = [];
 

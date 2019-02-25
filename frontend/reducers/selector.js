@@ -1,3 +1,4 @@
+/// function to find user in the users arr
 export const findUser = (users, userId) => {
   if (users.length === 0) return [];
   for (let i = 0; i < users.length; i++) {
@@ -12,6 +13,7 @@ export const findUser = (users, userId) => {
   return [];
 };
 
+/// function to grab all users info
 export const getAllUsers = users => {
   let userNames = [];
   for (let i = 0; i < users.length; i++) {
@@ -22,6 +24,7 @@ export const getAllUsers = users => {
   return userNames;
 };
 
+/// function to filter out the users info in the functions argument inside the users arr
 export const getUsers = (users, userId) => {
   let userNames = [];
   for (let i = 0; i < users.length; i++) {
@@ -34,6 +37,7 @@ export const getUsers = (users, userId) => {
   return userNames;
 };
 
+/// function to grab the users subordinates info
 export const getSubordinates = user => {
   let userNames = [];
   for (let i = 0; i < user.direct_reports.length; i++) {
@@ -44,6 +48,7 @@ export const getSubordinates = user => {
   return userNames;
 };
 
+/// will filter out the userSubs out of the users array
 export const getFilteredUsers = (users, userSubs) => {
   let userNames = [];
   for (let i = 0; i < users.length; i++) {

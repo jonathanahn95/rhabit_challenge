@@ -8,16 +8,6 @@ class User < ApplicationRecord
   class_name: :User,
   optional: true
 
-  def self.find_by_credentials(fname)
-    user = User.find_by(fname: fname)
-    user
-  end
-
-  def self.add_user(user)
-    user.subordinates.push(user)
-    user
-  end
-
   def self.get_user_hierarchy(user)
      user = User.where(id: user.id).first
      output = []
@@ -47,12 +37,9 @@ class User < ApplicationRecord
   end
 
   def self.reassign_subs_manager(employee, sup)
-    unless employee.subordinates.blank?
-      employee.subordinates.each do |emp|
-        emp.manager_id = sup.id
-        emp.save
-      end
+    employee.subordinates.each do |emp|
+      emp.manager_id = sup.id
+      emp.save
     end
   end
-
 end

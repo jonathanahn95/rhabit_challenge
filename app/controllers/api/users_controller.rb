@@ -19,6 +19,7 @@ class Api::UsersController < ApplicationController
 
   def destroy
      user = User.find(params[:id])
+     # reassign all of the users subordinates to the users superior
      User.reassign_subs_manager(user, user.superior)
      user.destroy
      @users = User.get_hierarchy
